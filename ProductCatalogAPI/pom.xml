@@ -143,6 +143,17 @@
                                     <goal>start</goal>
                                 </goals>
                                 <phase>pre-integration-test</phase>
+                                <configuration>
+                                    <!--
+                                      application.yaml defaults to the "postgres" hostname used inside the
+                                      docker-compose network. When this profile runs on the host machine
+                                      (not in a container), that hostname won't resolve, so point at the
+                                      Postgres port exposed on localhost instead.
+                                    -->
+                                    <environmentVariables>
+                                        <SPRING_DATASOURCE_URL>jdbc:postgresql://localhost:5432/productcatalog</SPRING_DATASOURCE_URL>
+                                    </environmentVariables>
+                                </configuration>
                             </execution>
                             <execution>
                                 <id>post-integration-test</id>

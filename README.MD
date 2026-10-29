@@ -59,8 +59,14 @@ Health: `http://localhost:8080/actuator/health`
 
 To produce a standalone `openapi.yaml` (e.g. for API clients, docs sites, or committing to `ProductCatalogConf`), run the
 `generate-openapi-spec` profile. It starts the app, lets SpringDoc introspect the controllers, writes
-`ProductCatalogAPI/target/openapi.yaml`, then stops the app — no manual `spring-boot:run` needed. A reachable Postgres
-matching `application.yaml`'s datasource is required (e.g. `docker compose up -d postgres` from `ProductCatalogDocker`):
+`ProductCatalogAPI/target/openapi.yaml`, then stops the app — no manual `spring-boot:run` needed. It overrides the
+datasource to `localhost:5432` for the duration of the run (the default `application.yaml` URL points at the `postgres`
+hostname used *inside* the docker-compose network, which isn't resolvable from the host). You just need Postgres
+reachable on `localhost:5432` matching the compose credentials, e.g.:
+
+```bash
+docker compose -f ProductCatalogDocker/src/main/resources/docker/docker-compose.yml up -d postgres
+```
 
 ```bash
 cd ProductCatalogAPI
@@ -84,3 +90,9 @@ cd ProductCatalogAPI
 - Response-level caching (e.g. Redis or HTTP caching headers) for hot category pages
 - Read replica routing for the query side, since reads vastly outnumber writes
 - CI/CD pipeline and OpenShift deployment automation
+
+
+cd ProductCatalogAPI
+docker compose -f ../ProductCatalogDocker/src/main/resources/docker/docker-compose.yml up -d postgres   # or any reachable Postgres
+./mvnw -P generate-openapi-spec verify
+# -> target/openapi.yaml
