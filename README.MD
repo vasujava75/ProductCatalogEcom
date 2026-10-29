@@ -55,20 +55,24 @@ mvn clean install -P local  # builds the image and runs postgres + api via docke
 API docs: `http://localhost:8080/swagger-ui.html`
 Health: `http://localhost:8080/actuator/health`
 
+> **Note on ports:** `docker-compose.yml` publishes Postgres on host port `5433` (not the default `5432`) to avoid
+> colliding with any other Postgres instance you may already have running locally. Override it with
+> `POSTGRES_HOST_PORT=<port> docker compose ... up -d` if `5433` is also taken. The app container always talks to
+> Postgres over the internal Docker network as `postgres:5432`, so this only affects host-side connections
+> (e.g. `psql`, DBeaver, or the OpenAPI-generation profile below).
+
 ### Generate the OpenAPI spec file
 
 To produce a standalone `openapi.yaml` (e.g. for API clients, docs sites, or committing to `ProductCatalogConf`), run the
 `generate-openapi-spec` profile. It starts the app, lets SpringDoc introspect the controllers, writes
 `ProductCatalogAPI/target/openapi.yaml`, then stops the app — no manual `spring-boot:run` needed. It overrides the
-datasource to `localhost:5432` for the duration of the run (the default `application.yaml` URL points at the `postgres`
+datasource to `localhost:5433` for the duration of the run (the default `application.yaml` URL points at the `postgres`
 hostname used *inside* the docker-compose network, which isn't resolvable from the host). You just need Postgres
-reachable on `localhost:5432` matching the compose credentials, e.g.:
+reachable on `localhost:5433` matching the compose credentials:
 
 ```bash
 docker compose -f ProductCatalogDocker/src/main/resources/docker/docker-compose.yml up -d postgres
-```
 
-```bash
 cd ProductCatalogAPI
 ./mvnw -P generate-openapi-spec verify
 # output: target/openapi.yaml
@@ -90,9 +94,3 @@ cd ProductCatalogAPI
 - Response-level caching (e.g. Redis or HTTP caching headers) for hot category pages
 - Read replica routing for the query side, since reads vastly outnumber writes
 - CI/CD pipeline and OpenShift deployment automation
-
-
-cd ProductCatalogAPI
-docker compose -f ../ProductCatalogDocker/src/main/resources/docker/docker-compose.yml up -d postgres   # or any reachable Postgres
-./mvnw -P generate-openapi-spec verify
-# -> target/openapi.yaml

@@ -151,7 +151,7 @@
                                       Postgres port exposed on localhost instead.
                                     -->
                                     <environmentVariables>
-                                        <SPRING_DATASOURCE_URL>jdbc:postgresql://localhost:5432/productcatalog</SPRING_DATASOURCE_URL>
+                                        <SPRING_DATASOURCE_URL>jdbc:postgresql://localhost:5433/productcatalog</SPRING_DATASOURCE_URL>
                                     </environmentVariables>
                                 </configuration>
                             </execution>
