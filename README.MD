@@ -55,6 +55,19 @@ mvn clean install -P local  # builds the image and runs postgres + api via docke
 API docs: `http://localhost:8080/swagger-ui.html`
 Health: `http://localhost:8080/actuator/health`
 
+### Generate the OpenAPI spec file
+
+To produce a standalone `openapi.yaml` (e.g. for API clients, docs sites, or committing to `ProductCatalogConf`), run the
+`generate-openapi-spec` profile. It starts the app, lets SpringDoc introspect the controllers, writes
+`ProductCatalogAPI/target/openapi.yaml`, then stops the app — no manual `spring-boot:run` needed. A reachable Postgres
+matching `application.yaml`'s datasource is required (e.g. `docker compose up -d postgres` from `ProductCatalogDocker`):
+
+```bash
+cd ProductCatalogAPI
+./mvnw -P generate-openapi-spec verify
+# output: target/openapi.yaml
+```
+
 ## API Overview
 
 | Method | Path                     | Description                                      |
