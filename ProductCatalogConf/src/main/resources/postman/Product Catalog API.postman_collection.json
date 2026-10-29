@@ -1,0 +1,101 @@
+{
+  "info": {
+    "name": "Product Catalog API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "List products (paged)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/api/v1/products?category=Electronics&minPrice=10&maxPrice=100&page=0&size=20",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "products"],
+          "query": [
+            {"key": "category", "value": "Electronics"},
+            {"key": "minPrice", "value": "10"},
+            {"key": "maxPrice", "value": "100"},
+            {"key": "page", "value": "0"},
+            {"key": "size", "value": "20"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "List products feed (cursor)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/api/v1/products/feed?category=Electronics&limit=50",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "products", "feed"],
+          "query": [
+            {"key": "category", "value": "Electronics"},
+            {"key": "limit", "value": "50"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get product by id",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/api/v1/products/1",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "products", "1"]
+        }
+      }
+    },
+    {
+      "name": "Create product",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sku\": \"SKU-NEW-1\",\n  \"name\": \"New Product\",\n  \"description\": \"Sample description\",\n  \"category\": \"Electronics\",\n  \"price\": 49.99,\n  \"currency\": \"USD\",\n  \"stockQuantity\": 100,\n  \"active\": true\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/products",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "products"]
+        }
+      }
+    },
+    {
+      "name": "Update product",
+      "request": {
+        "method": "PUT",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated Product\",\n  \"price\": 59.99\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/products/1",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "products", "1"]
+        }
+      }
+    },
+    {
+      "name": "Delete product",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "http://localhost:8080/api/v1/products/1",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "products", "1"]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+INSERT INTO products (sku, name, description, category, price, currency, stock_quantity, active) VALUES
+    ('SKU-0001', 'Wireless Mouse', 'Ergonomic wireless mouse with USB receiver', 'Electronics', 19.99, 'USD', 500, TRUE),
+    ('SKU-0002', 'Mechanical Keyboard', 'RGB backlit mechanical keyboard', 'Electronics', 79.99, 'USD', 200, TRUE),
+    ('SKU-0003', '27-inch 4K Monitor', 'IPS panel, HDR support', 'Electronics', 349.00, 'USD', 75, TRUE),
+    ('SKU-0004', 'USB-C Hub', '7-in-1 USB-C hub with HDMI and Ethernet', 'Electronics', 34.50, 'USD', 300, TRUE),
+    ('SKU-0005', 'Running Shoes', 'Lightweight breathable running shoes', 'Footwear', 89.99, 'USD', 150, TRUE),
+    ('SKU-0006', 'Leather Boots', 'Genuine leather winter boots', 'Footwear', 129.99, 'USD', 60, TRUE),
+    ('SKU-0007', 'Cotton T-Shirt', 'Crew neck cotton t-shirt', 'Apparel', 14.99, 'USD', 1000, TRUE),
+    ('SKU-0008', 'Denim Jacket', 'Classic fit denim jacket', 'Apparel', 59.99, 'USD', 220, TRUE),
+    ('SKU-0009', 'Stainless Steel Water Bottle', 'Insulated 750ml bottle', 'Home & Kitchen', 24.99, 'USD', 400, TRUE),
+    ('SKU-0010', 'Non-stick Frying Pan', '28cm non-stick frying pan', 'Home & Kitchen', 29.99, 'USD', 180, TRUE),
+    ('SKU-0011', 'Yoga Mat', 'Non-slip 6mm yoga mat', 'Sports & Outdoors', 22.00, 'USD', 350, TRUE),
+    ('SKU-0012', 'Adjustable Dumbbell Set', '5-25kg adjustable dumbbells', 'Sports & Outdoors', 189.00, 'USD', 40, TRUE),
+    ('SKU-0013', 'Discontinued Tablet', 'Older generation tablet, no longer sold', 'Electronics', 99.00, 'USD', 0, FALSE),
+    ('SKU-0014', 'Bluetooth Speaker', 'Portable waterproof speaker', 'Electronics', 45.00, 'USD', 260, TRUE),
+    ('SKU-0015', 'Ceramic Coffee Mug Set', 'Set of 4 ceramic mugs', 'Home & Kitchen', 18.50, 'USD', 500, TRUE);

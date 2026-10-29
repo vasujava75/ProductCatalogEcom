@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres-product-catalog
+    environment:
+      POSTGRES_DB: productcatalog
+      POSTGRES_USER: cataloguser
+      POSTGRES_PASSWORD: catalogpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - catalog-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cataloguser -d productcatalog"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  product-catalog-api:
+    image: vasujava75/productcatalog:latest
+    pull_policy: never
+    container_name: product-catalog-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/productcatalog
+      SPRING_DATASOURCE_USERNAME: cataloguser
+      SPRING_DATASOURCE_PASSWORD: catalogpass
+    networks:
+      - catalog-network
+
+volumes:
+  postgres_data:
+
+networks:
+  catalog-network:
+    driver: bridge
